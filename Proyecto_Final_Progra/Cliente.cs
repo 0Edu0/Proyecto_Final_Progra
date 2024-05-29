@@ -1,9 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Proyecto_Final_Progra
 {
@@ -17,7 +13,9 @@ namespace Proyecto_Final_Progra
         public string Ingreso;
         public string Salida;
         public int Acompañantes;
-        private string connectionString = "server=localhost;user=root;database=proyectofinal;port=3306;password=kevin";
+        private static int ContadorClientes = 1;
+        private string connectionString = "server=localhost;user=root;database=Proyecto_Final_Progra_I;port=3306;password=dangerloveV20;";
+        public string idReserva {  get; private set; }
 
         public void agregar()
         {
@@ -46,12 +44,16 @@ namespace Proyecto_Final_Progra
                     int AcompañantesCliente = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Datos ingresados exitosamente.");
 
-                    string query = "INSERT INTO cliente (DPI,Nombre,Celular,CorreoElectronico,Tarjeta,FechaIngreso,FechaSalida,Acompañantes) VALUES (´" + DPICliente + "´,´" + NombreCliente + "´,´" + CelularCliente + "´,´" + CorreoCliente + "´,´" + TarjetaCliente + "´,´" + IngresoCliente + "´,´" + SalidaCliente + "´,´" + AcompañantesCliente + "´);";
+                    string query = "INSERT INTO cliente (`DPI`, `Nombre`, `Celular`, `Correo Electronico`, `Tarjeta`, `Fecha Ingreso`, `Fecha Salida`, `Acompañantes`) VALUES ('" + DPICliente + "','" + NombreCliente + "','" + CelularCliente + "','" + CorreoCliente + "','" + TarjetaCliente + "','" + IngresoCliente + "','" + SalidaCliente + "','" + AcompañantesCliente + "');";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
 
                     MySqlDataReader reader = cmd.ExecuteReader();
                     reader.Close();
                     Console.WriteLine("Registro guardado");
+
+                    idReserva = Guid.NewGuid().ToString();
+
+                    Console.WriteLine("Tu codigo de reserva es: " + idReserva);
                 }
             }
             catch (Exception ex)
