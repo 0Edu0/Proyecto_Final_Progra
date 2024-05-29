@@ -15,7 +15,7 @@ namespace Proyecto_Final_Progra
         public int Acompañantes;
         private static int ContadorClientes = 1;
         private string connectionString = "server=localhost;user=root;database=Proyecto_Final_Progra_I;port=3306;password=dangerloveV20;";
-        public string idReserva {  get; private set; }
+        public string idReserva { get; private set; }
 
         public void agregar()
         {
@@ -44,16 +44,19 @@ namespace Proyecto_Final_Progra
                     int AcompañantesCliente = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Datos ingresados exitosamente.");
 
-                    string query = "INSERT INTO cliente (`DPI`, `Nombre`, `Celular`, `Correo Electronico`, `Tarjeta`, `Fecha Ingreso`, `Fecha Salida`, `Acompañantes`) VALUES ('" + DPICliente + "','" + NombreCliente + "','" + CelularCliente + "','" + CorreoCliente + "','" + TarjetaCliente + "','" + IngresoCliente + "','" + SalidaCliente + "','" + AcompañantesCliente + "');";
+                    /*Revisar ID Reserva para guardar en base de datos por Eduardo*/
+                    idReserva = Guid.NewGuid().ToString();
+                    Console.WriteLine("Tu codigo de reserva es: " + idReserva);
+                    string idReservaCliente = Console.ReadLine();
+
+                    string query = "INSERT INTO cliente (`DPI`, `Nombre`, `Celular`, `Correo Electronico`, `Tarjeta`, `Fecha Ingreso`, `Fecha Salida`, `Acompañantes`, `ID Reserva`) VALUES ('" + DPICliente + "','" + NombreCliente + "','" + CelularCliente + "','" + CorreoCliente + "','" + TarjetaCliente + "','" + IngresoCliente + "','" + SalidaCliente + "','" + AcompañantesCliente + "','" + idReserva + "');";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
 
                     MySqlDataReader reader = cmd.ExecuteReader();
                     reader.Close();
                     Console.WriteLine("Registro guardado");
 
-                    idReserva = Guid.NewGuid().ToString();
 
-                    Console.WriteLine("Tu codigo de reserva es: " + idReserva);
                 }
             }
             catch (Exception ex)
@@ -62,10 +65,26 @@ namespace Proyecto_Final_Progra
 
             }
         }
-
-        public void Consultar()
+    }
+    /*Pendiente a revisar por Kevin */
+    public void Consultar()
+    {
+        Console.WriteLine("Ingresa el codigo de reservacion:");
+        try
         {
-            Console.WriteLine("Ingresa el codigo de reservacion:");
+            using (MySqlConnection conn = new MySqlConnection(connectionString) )
+            {
+                conn.Open();
+                string query = "select * from cliente";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Console.WriteLine(rdr["DPI"] + "\t" + rdr["nombre"] + "\t" + rdr["celular"] + "\t" + rdr["Correo Electronico"])
+                        
+                }
+            }
         }
+
     }
 }
