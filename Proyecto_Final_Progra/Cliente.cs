@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.ComponentModel;
 
 namespace Proyecto_Final_Progra
 {
@@ -49,42 +50,77 @@ namespace Proyecto_Final_Progra
                     Console.WriteLine("Tu codigo de reserva es: " + idReserva);
                     string idReservaCliente = Console.ReadLine();
 
-                    string query = "INSERT INTO cliente (`DPI`, `Nombre`, `Celular`, `Correo Electronico`, `Tarjeta`, `Fecha Ingreso`, `Fecha Salida`, `Acompañantes`, `ID Reserva`) VALUES ('" + DPICliente + "','" + NombreCliente + "','" + CelularCliente + "','" + CorreoCliente + "','" + TarjetaCliente + "','" + IngresoCliente + "','" + SalidaCliente + "','" + AcompañantesCliente + "','" + idReserva + "');";
+                    string query = "INSERT INTO cliente (`DPI`, `Nombre`, `Celular`, `Correo Electronico`, `Tarjeta`, `Fecha Ingreso`, `Fecha Salida`, `Acompañantes`) VALUES ('" + DPICliente + "','" + NombreCliente + "','" + CelularCliente + "','" + CorreoCliente + "','" + TarjetaCliente + "','" + IngresoCliente + "','" + SalidaCliente + "','" + AcompañantesCliente + "');";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
 
                     MySqlDataReader reader = cmd.ExecuteReader();
                     reader.Close();
                     Console.WriteLine("Registro guardado");
-
-
+                    /*
+                    Habitaciones habitaciones = new Habitaciones();
+                    habitaciones.SolicitarDatos();*/
                 }
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine("ERROR: " + ex);
 
             }
-        }
-    }
-    /*Pendiente a revisar por Kevin */
-    public void Consultar()
-    {
-        Console.WriteLine("Ingresa el codigo de reservacion:");
-        try
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString) )
-            {
-                conn.Open();
-                string query = "select * from cliente";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    Console.WriteLine(rdr["DPI"] + "\t" + rdr["nombre"] + "\t" + rdr["celular"] + "\t" + rdr["Correo Electronico"])
-                        
-                }
-            }
+
+
         }
 
+        /*Pendiente a revisar por Kevin */
+        public void consultar()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    Console.WriteLine("Ingresa el DPI del cliente que deseas consultar:");
+                    int dpiConsulta = Convert.ToInt32(Console.ReadLine());
+                    conn.Open();
+                    string query = "SELECT * FROM cliente WHERE DPI = @DPI";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@DPI", dpiConsulta);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Console.WriteLine(rdr["DPI"] + "\t" + rdr["nombre"] + "\t" + rdr["celular"] + "\t" + rdr["Correo Electronico"] + "\t" + rdr["Tarjeta"] + "t" + rdr["Fecha Ingreso"] + "\t" + rdr["Fecha Salida"] + "\t" + rdr["Acompañantes"]);
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.ToString());
+            }
+
+        }
+
+        public void eliminar()
+        {
+            Console.WriteLine("Ingresa el DPI de la reservacion que deseas eliminar");
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    Console.WriteLine("Ingrese DPI de reserva a eliminar: ");
+                    int DPI = Convert.ToInt32(Console.ReadLine());
+                    string query = "delete from cliente where DPI = '" + DPI + "'";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    rdr.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.ToString());
+            }
+        }
     }
 }
+

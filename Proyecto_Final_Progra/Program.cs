@@ -15,6 +15,7 @@ namespace Proyecto_Final_Progra
             int opcion;
             bool continuar = true;
             Cliente cliente = new Cliente();
+            Habitaciones habitaciones = new Habitaciones();
             while (continuar)
             {
                 Console.WriteLine("Menu de reservaciones");
@@ -41,6 +42,7 @@ namespace Proyecto_Final_Progra
                             break;
                         case 2:
                             Console.WriteLine("Consultar reservaciones...");
+                            cliente.consultar();
                             break;
                         case 3:
                             Console.WriteLine("Actualizar reservación...");
