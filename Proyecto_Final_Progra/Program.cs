@@ -39,6 +39,7 @@ namespace Proyecto_Final_Progra
                         case 1:
                             Console.WriteLine("Ingresa tus datos");
                             cliente.agregar();
+                            habitaciones.SolicitarDatos();
                             break;
                         case 2:
                             Console.WriteLine("Consultar reservaciones...");

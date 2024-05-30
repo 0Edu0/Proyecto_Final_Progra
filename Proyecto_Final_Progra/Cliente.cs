@@ -45,9 +45,6 @@ namespace Proyecto_Final_Progra
                     int AcompañantesCliente = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Datos ingresados exitosamente.");
 
-                    /*Revisar ID Reserva para guardar en base de datos por Eduardo*/
-
-
                     string query = "INSERT INTO cliente (`DPI`, `Nombre`, `Celular`, `Correo Electronico`, `Tarjeta`, `Fecha Ingreso`, `Fecha Salida`, `Acompañantes`) VALUES ('" + DPICliente + "','" + NombreCliente + "','" + CelularCliente + "','" + CorreoCliente + "','" + TarjetaCliente + "','" + IngresoCliente + "','" + SalidaCliente + "','" + AcompañantesCliente + "');";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -59,8 +56,6 @@ namespace Proyecto_Final_Progra
                     Console.WriteLine("Tu codigo de reserva es: " + idReserva);
                     string idReservaCliente = Console.ReadLine();
                     
-                    Habitaciones habitaciones = new Habitaciones();
-                    habitaciones.SolicitarDatos();
                 }
 
             }

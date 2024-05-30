@@ -22,11 +22,11 @@ namespace Proyecto_Final_Progra
             for (int i = 0; i < cantidadHabitaciones; i++)
             {
 
-                Console.WriteLine($"¿Que tipo de Habitaciones desea reservar para su estadia en el hotel {i + 1}?");
+                Console.WriteLine($"¿Que tipo desea reservar para la habitacion {i + 1}?");
                 Console.WriteLine("1. Habitacion Sencilla - Q 200.00");
                 Console.WriteLine("2. Habitacion Normal - Q 300.00");
                 Console.WriteLine("3. Habitacion Doble - Q 500.00");
-                Console.WriteLine("3. Habitacion Suite - Q 800.00");
+                Console.WriteLine("4. Habitacion Suite - Q 800.00");
 
                 int option = int.Parse(Console.ReadLine());
                 switch (option)
@@ -57,15 +57,15 @@ namespace Proyecto_Final_Progra
             }
             MostrarResumen();
         }    
-        private void MostrarResumen()
+        public void MostrarResumen()
         {
             Console.WriteLine($"Ha reservado {cantidadHabitaciones} habitaciones de los siguentes tipos:");
             for (int i = 0; i < cantidadHabitaciones; ++i)
             {
-                Console.WriteLine($"Habitacion{i + 1}");
+                Console.WriteLine($"Habitacion {i + 1}: {tipoHabitacion[i]}");
             }
             { 
-                Console.WriteLine($"Costo total{costoTotal}");
+                Console.WriteLine($"Costo total     {costoTotal}");
             }
 
         }
