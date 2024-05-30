@@ -49,6 +49,7 @@ namespace Proyecto_Final_Progra
                             break;
                         case 4:
                             Console.WriteLine("Eliminar reservación...");
+                            cliente.eliminar();
                             break;
                         case 5:
                             continuar = false;

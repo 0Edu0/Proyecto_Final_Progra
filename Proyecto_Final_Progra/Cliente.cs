@@ -46,9 +46,7 @@ namespace Proyecto_Final_Progra
                     Console.WriteLine("Datos ingresados exitosamente.");
 
                     /*Revisar ID Reserva para guardar en base de datos por Eduardo*/
-                    idReserva = Guid.NewGuid().ToString();
-                    Console.WriteLine("Tu codigo de reserva es: " + idReserva);
-                    string idReservaCliente = Console.ReadLine();
+
 
                     string query = "INSERT INTO cliente (`DPI`, `Nombre`, `Celular`, `Correo Electronico`, `Tarjeta`, `Fecha Ingreso`, `Fecha Salida`, `Acompañantes`) VALUES ('" + DPICliente + "','" + NombreCliente + "','" + CelularCliente + "','" + CorreoCliente + "','" + TarjetaCliente + "','" + IngresoCliente + "','" + SalidaCliente + "','" + AcompañantesCliente + "');";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -56,9 +54,13 @@ namespace Proyecto_Final_Progra
                     MySqlDataReader reader = cmd.ExecuteReader();
                     reader.Close();
                     Console.WriteLine("Registro guardado");
-                    /*
+
+                    idReserva = Guid.NewGuid().ToString();
+                    Console.WriteLine("Tu codigo de reserva es: " + idReserva);
+                    string idReservaCliente = Console.ReadLine();
+                    
                     Habitaciones habitaciones = new Habitaciones();
-                    habitaciones.SolicitarDatos();*/
+                    habitaciones.SolicitarDatos();
                 }
 
             }
@@ -102,7 +104,6 @@ namespace Proyecto_Final_Progra
 
         public void eliminar()
         {
-            Console.WriteLine("Ingresa el DPI de la reservacion que deseas eliminar");
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -114,6 +115,7 @@ namespace Proyecto_Final_Progra
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     MySqlDataReader rdr = cmd.ExecuteReader();
                     rdr.Close();
+                    Console.WriteLine("El registro " + DPI + " se ha eliminado exitosamente");
                 }
             }
             catch (Exception ex)
