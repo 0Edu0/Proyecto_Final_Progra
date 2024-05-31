@@ -65,10 +65,8 @@ namespace Proyecto_Final_Progra
 
             }
 
-
         }
 
-        /*Pendiente a revisar por Kevin */
         public void consultar()
         {
             try
@@ -94,9 +92,57 @@ namespace Proyecto_Final_Progra
             {
                 Console.WriteLine("Error: " + ex.ToString());
             }
-
         }
 
+        public void actualizar()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    Console.WriteLine("Ingrese el DPI a eliminar");
+                    int DPI = Convert.ToInt32(Console.ReadLine());
+
+                    Console.WriteLine("Por favor llene lo que se le solicita: ");
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Ingrese su nombre");
+                    string NombreCliente = Console.ReadLine();
+                    Console.WriteLine("Ingresa tu numero de celular.");
+                    int CelularCliente = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Ingresa tu correo electronico.");
+                    string CorreoCliente = Console.ReadLine();
+                    Console.WriteLine("Ingresa los digitos de tu tarjeta de debito o credito.");
+                    int TarjetaCliente = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Fecha de tu ingreso al hotel.");
+                    string IngresoCliente = Console.ReadLine();
+                    Console.WriteLine("Fecha de salida.");
+                    string SalidaCliente = Console.ReadLine();
+                    Console.WriteLine("Ingresa el numero de acompañantes.");
+                    int AcompañantesCliente = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Datos ingresados exitosamente.");
+
+                    string query = "UPDATE `proyecto_final_progra_i`.`cliente` SET `Nombre` = @Nombre, `Celular` = @Celular, `Correo Electronico` = @Correo, `Tarjeta` = @Tarjeta, `Fecha Ingreso` = @Ingreso, `Fecha Salida` = @Salida, `Acompañantes` = @Acompanantes WHERE (`DPI` = @DPI);";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Nombre", NombreCliente);
+                    cmd.Parameters.AddWithValue("@Celular", CelularCliente);
+                    cmd.Parameters.AddWithValue("@Correo", CorreoCliente);
+                    cmd.Parameters.AddWithValue("@Tarjeta", TarjetaCliente);
+                    cmd.Parameters.AddWithValue("@Ingreso", IngresoCliente);
+                    cmd.Parameters.AddWithValue("@Salida", SalidaCliente);
+                    cmd.Parameters.AddWithValue("@Acompanantes", AcompañantesCliente);
+                    cmd.Parameters.AddWithValue("@DPI", DPI);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    Console.WriteLine("Filas afectadas: " + rowsAffected);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.ToString());
+            }
+        }
         public void eliminar()
         {
             try

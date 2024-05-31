@@ -47,6 +47,7 @@ namespace Proyecto_Final_Progra
                             break;
                         case 3:
                             Console.WriteLine("Actualizar reservación...");
+                            cliente.actualizar();
                             break;
                         case 4:
                             Console.WriteLine("Eliminar reservación...");
